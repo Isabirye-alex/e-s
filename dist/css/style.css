@@ -1,0 +1,10 @@
+/* Highlight the selected row */
+table#orderTable tbody tr.selected-row td {
+    background-color: #004085 !important; /* Deep navy blue */
+    color: white !important;
+}
+
+/* Optional: hover color for non-selected rows */
+table#orderTable tbody tr:hover:not(.selected-row) td {
+    background-color: #e2e6ea;
+}
