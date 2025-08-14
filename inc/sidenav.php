@@ -68,7 +68,7 @@
             <p>Reports <i class="nav-arrow bi bi-chevron-right"></i></p>
           </a>
           <ul class="nav nav-treeview">
-            <li class="nav-item"><a href="#" class="nav-link"><i class="nav-icon bi bi-receipt"></i><p>Orders Report</p></a></li>
+            <li class="nav-item"><a href="?page=reports" class="nav-link"><i class="nav-icon bi bi-receipt"></i><p>View Reports</p></a></li>
             <li class="nav-item"><a href="#" class="nav-link"><i class="nav-icon bi bi-currency-dollar"></i><p>Sales Report</p></a></li>
             <li class="nav-item"><a href="#" class="nav-link"><i class="nav-icon bi bi-wallet2"></i><p>Cash Flow</p></a></li>
             <li class="nav-item"><a href="#" class="nav-link"><i class="nav-icon bi bi-box-seam"></i><p>Stock Report</p></a></li>
@@ -82,9 +82,9 @@
             <p>System Users <i class="nav-arrow bi bi-chevron-right"></i></p>
           </a>
           <ul class="nav nav-treeview">
-            <li class="nav-item"><a href="#" class="nav-link"><i class="nav-icon bi bi-person-check-fill"></i><p>Active Users</p></a></li>
-            <li class="nav-item"><a href="#" class="nav-link"><i class="nav-icon bi bi-person-dash-fill"></i><p>Blocked Users</p></a></li>
-            <li class="nav-item"><a href="#" class="nav-link"><i class="nav-icon bi bi-people"></i><p>User Groups</p></a></li>
+            <li class="nav-item"><a href="?page=system_users" class="nav-link"><i class="nav-icon bi bi-person-check-fill"></i><p>Active Users</p></a></li>
+            <li class="nav-item"><a href="?page=locked_users" class="nav-link"><i class="nav-icon bi bi-person-dash-fill"></i><p>Blocked Users</p></a></li>
+            <li class="nav-item"><a href="?page=user_groups" class="nav-link"><i class="nav-icon bi bi-people"></i><p>User Groups</p></a></li>
           </ul>
         </li>
 
@@ -110,10 +110,8 @@
             <p>System Admin <i class="nav-arrow bi bi-chevron-right"></i></p>
           </a>
           <ul class="nav nav-treeview">
-            <li class="nav-item"><a href="#" class="nav-link"><i class="nav-icon bi bi-key-fill"></i><p>Login Attempts</p></a></li>
-            <li class="nav-item"><a href="#" class="nav-link"><i class="nav-icon bi bi-award-fill"></i><p>Licenses</p></a></li>
-            <li class="nav-item"><a href="#" class="nav-link"><i class="nav-icon bi bi-sliders"></i><p>System Settings</p></a></li>
-            <li class="nav-item"><a href="#" class="nav-link"><i class="nav-icon bi bi-person-badge-fill"></i><p>System Roles</p></a></li>
+            <li class="nav-item"><a href="?page=login_attempts" class="nav-link"><i class="nav-icon bi bi-key-fill"></i><p>Login Attempts</p></a></li>
+            <li class="nav-item"><a href="?page=system_roles" class="nav-link"><i class="nav-icon bi bi-person-badge-fill"></i><p>System Roles</p></a></li>
           </ul>
         </li>
 
@@ -124,10 +122,9 @@
             <p>Management <i class="nav-arrow bi bi-chevron-right"></i></p>
           </a>
           <ul class="nav nav-treeview">
-            <li class="nav-item"><a href="#" class="nav-link"><i class="nav-icon bi bi-tags-fill"></i><p>Categories & Units</p></a></li>
-            <li class="nav-item"><a href="#" class="nav-link"><i class="nav-icon bi bi-cash-coin"></i><p>Currencies</p></a></li>
-            <li class="nav-item"><a href="#" class="nav-link"><i class="nav-icon bi bi-truck-front-fill"></i><p>Suppliers List</p></a></li>
-            <li class="nav-item"><a href="#" class="nav-link"><i class="nav-icon bi bi-person-lines-fill"></i><p>Customers List</p></a></li>
+            <li class="nav-item"><a href="?page=categories" class="nav-link"><i class="nav-icon bi bi-tags-fill"></i><p>Categories & Units</p></a></li>
+            <li class="nav-item"><a href="?page=supplier" class="nav-link"><i class="nav-icon bi bi-truck-front-fill"></i><p>Suppliers List</p></a></li>
+            <li class="nav-item"><a href="?page=customers" class="nav-link"><i class="nav-icon bi bi-person-lines-fill"></i><p>Customers List</p></a></li>
             <li class="nav-item"><a href="#" class="nav-link"><i class="nav-icon bi bi-arrow-repeat"></i><p>Price Changes</p></a></li>
             <li class="nav-item"><a href="#" class="nav-link"><i class="nav-icon bi bi-arrow-left-right"></i><p>Stock Changes</p></a></li>
           </ul>
