@@ -1,207 +1,139 @@
-<aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
-  <!--begin::Sidebar Brand-->
+<style>
+
+  .app-sidebar {
+  font-size: 1.5rem; /* Increase font size */
+  height: 100vh; /* Occupy full screen height */
+  overflow-y: auto; /* Scroll if content exceeds screen */
+}
+
+.sidebar-menu > .nav-item {
+  margin-bottom: 8px; /* Space between dropdown sections */
+}
+
+.sidebar-menu .nav-link {
+  padding: 12px 16px; /* Bigger clickable area */
+}
+
+.sidebar-menu .nav-treeview .nav-link {
+  padding-left: 32px; /* Indent submenus */
+}
+
+.nav-treeview .nav-item {
+  margin-bottom: 6px; /* Space between dropdown items */
+}
+
+</style>
+
+<aside class="app-sidebar bg-body-secondary shadow text-primary" data-bs-theme="dark">
+  <!-- Sidebar Brand -->
   <div class="sidebar-brand">
-    <!--begin::Brand Link-->
     <a href="./index.html" class="brand-link">
-      <!--begin::Brand Image-->
       <img src="../assets/img/AdminLTELogo.png" alt="X-Shop Logo" class="brand-image opacity-75 shadow" />
-      <!--end::Brand Image-->
-      <!--begin::Brand Text-->
       <span class="brand-text fw-light">X-Dashboard</span>
-      <!--end::Brand Text-->
     </a>
-    <!--end::Brand Link-->
   </div>
-  <!--end::Sidebar Brand-->
-  <!--begin::Sidebar Wrapper-->
+
+  <!-- Sidebar Wrapper -->
   <div class="sidebar-wrapper">
-    <nav class="mt-2">
-      <!--begin::Sidebar Menu-->
+    <nav class="mt-2 text-primary">
       <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu" data-accordion="false">
+
+        <!-- Dashboard -->
         <li class="nav-item menu-open">
           <a href="?page=dashboard" class="nav-link active">
-            <i class="nav-icon bi bi-speedometer"></i>
-            <p>
-              Dashboard
-            </p>
+            <i class="nav-icon bi bi-speedometer2"></i>
+            <p>Dashboard</p>
           </a>
         </li>
+
+        <!-- Orders -->
         <li class="nav-item">
           <a href="#" class="nav-link">
-            <i class="nav-icon bi bi-bag-check-fill"></i> <!-- Orders icon -->
-            <p>
-              Orders
-              <i class="nav-arrow bi bi-chevron-right"></i>
-            </p>
+            <i class="nav-icon bi bi-cart3"></i>
+            <p>Orders <i class="nav-arrow bi bi-chevron-right"></i></p>
           </a>
           <ul class="nav nav-treeview">
-            <li class="nav-item">
-              <a href="?page=orders" class="nav-link">
-                <i class="nav-icon bi bi-hourglass-split"></i> <!-- Pending -->
-                <p>Orders</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="./widgets/info-box.html" class="nav-link">
-                <i class="nav-icon bi bi-check-circle-fill"></i> <!-- Confirmed -->
-                <p>Pending Orders</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="./widgets/info-box.html" class="nav-link">
-                <i class="nav-icon bi bi-check-circle-fill"></i> <!-- Confirmed -->
-                <p>Confirmed Orders</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="./widgets/cards.html" class="nav-link">
-                <i class="nav-icon bi bi-truck"></i> <!-- Shipped -->
-                <p>Shipped Orders</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="./widgets/cards.html" class="nav-link">
-                <i class="nav-icon bi bi-gear-fill"></i> <!-- Processed -->
-                <p>Processed Orders</p>
-              </a>
-            </li>
+            <li class="nav-item"><a href="?page=orders" class="nav-link"><i class="nav-icon bi bi-list-check"></i><p>All Orders</p></a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="nav-icon bi bi-hourglass-split"></i><p>Pending Orders</p></a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="nav-icon bi bi-check2-circle"></i><p>Confirmed Orders</p></a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="nav-icon bi bi-truck"></i><p>Shipped Orders</p></a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="nav-icon bi bi-gear"></i><p>Processed Orders</p></a></li>
           </ul>
         </li>
 
-        </li>
+        <!-- Reports -->
         <li class="nav-item">
           <a href="#" class="nav-link">
-            <i class="nav-icon bi bi-clipboard-fill"></i>
-            <p>
-              Layout Options
-              <span class="nav-badge badge text-bg-secondary me-3">6</span>
-              <i class="nav-arrow bi bi-chevron-right"></i>
-            </p>
+            <i class="nav-icon bi bi-bar-chart-line"></i>
+            <p>Reports <i class="nav-arrow bi bi-chevron-right"></i></p>
           </a>
           <ul class="nav nav-treeview">
-            <li class="nav-item">
-              <a href="./layout/unfixed-sidebar.html" class="nav-link">
-                <i class="nav-icon bi bi-circle"></i>
-                <p>Default Sidebar</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="./layout/fixed-sidebar.html" class="nav-link">
-                <i class="nav-icon bi bi-circle"></i>
-                <p>Fixed Sidebar</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="./layout/layout-custom-area.html" class="nav-link">
-                <i class="nav-icon bi bi-circle"></i>
-                <p>Layout <small>+ Custom Area </small></p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="./layout/sidebar-mini.html" class="nav-link">
-                <i class="nav-icon bi bi-circle"></i>
-                <p>Sidebar Mini</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="./layout/collapsed-sidebar.html" class="nav-link">
-                <i class="nav-icon bi bi-circle"></i>
-                <p>Sidebar Mini <small>+ Collapsed</small></p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="./layout/logo-switch.html" class="nav-link">
-                <i class="nav-icon bi bi-circle"></i>
-                <p>Sidebar Mini <small>+ Logo Switch</small></p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="./layout/layout-rtl.html" class="nav-link">
-                <i class="nav-icon bi bi-circle"></i>
-                <p>Layout RTL</p>
-              </a>
-            </li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="nav-icon bi bi-receipt"></i><p>Orders Report</p></a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="nav-icon bi bi-currency-dollar"></i><p>Sales Report</p></a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="nav-icon bi bi-wallet2"></i><p>Cash Flow</p></a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="nav-icon bi bi-box-seam"></i><p>Stock Report</p></a></li>
           </ul>
         </li>
+
+        <!-- System Users -->
         <li class="nav-item">
           <a href="#" class="nav-link">
-            <i class="nav-icon bi bi-tree-fill"></i>
-            <p>
-              UI Elements
-              <i class="nav-arrow bi bi-chevron-right"></i>
-            </p>
+            <i class="nav-icon bi bi-people-fill"></i>
+            <p>System Users <i class="nav-arrow bi bi-chevron-right"></i></p>
           </a>
           <ul class="nav nav-treeview">
-            <li class="nav-item">
-              <a href="./UI/general.html" class="nav-link">
-                <i class="nav-icon bi bi-circle"></i>
-                <p>General</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="./UI/icons.html" class="nav-link">
-                <i class="nav-icon bi bi-circle"></i>
-                <p>Icons</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="./UI/timeline.html" class="nav-link">
-                <i class="nav-icon bi bi-circle"></i>
-                <p>Timeline</p>
-              </a>
-            </li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="nav-icon bi bi-person-check-fill"></i><p>Active Users</p></a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="nav-icon bi bi-person-dash-fill"></i><p>Blocked Users</p></a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="nav-icon bi bi-people"></i><p>User Groups</p></a></li>
           </ul>
         </li>
+
         <li class="nav-item">
           <a href="#" class="nav-link">
-            <i class="nav-icon bi bi-pencil-square"></i>
-            <p>
-              Forms
-              <i class="nav-arrow bi bi-chevron-right"></i>
-            </p>
+            <i class="nav-icon bi bi-gear-wide-connected"></i>
+            <p>Vendors <i class="nav-arrow bi bi-chevron-right"></i></p>
           </a>
           <ul class="nav nav-treeview">
-            <li class="nav-item">
-              <a href="./forms/general.html" class="nav-link">
-                <i class="nav-icon bi bi-circle"></i>
-                <p>General Elements</p>
-              </a>
-            </li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="nav-icon bi bi-people"></i><p>Active Vendors</p></a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="nav-icon bi bi-cash-coin"></i><p>Currencies</p></a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="nav-icon bi bi-truck-front-fill"></i><p>Inactive Vendors</p></a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="nav-icon bi bi-person-lines-fill"></i><p>Locked Vendors</p></a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="nav-icon bi bi-arrow-repeat"></i><p>High Selling Vendors</p></a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="nav-icon bi bi-arrow-left-right"></i><p>Poor Performing Vendors</p></a></li>
           </ul>
         </li>
+
+        <!-- System Admin -->
         <li class="nav-item">
           <a href="#" class="nav-link">
-            <i class="nav-icon bi bi-table"></i>
-            <p>
-              Tables
-              <i class="nav-arrow bi bi-chevron-right"></i>
-            </p>
+            <i class="nav-icon bi bi-shield-lock-fill"></i>
+            <p>System Admin <i class="nav-arrow bi bi-chevron-right"></i></p>
           </a>
           <ul class="nav nav-treeview">
-            <li class="nav-item">
-              <a href="./tables/simple.html" class="nav-link">
-                <i class="nav-icon bi bi-circle"></i>
-                <p>Simple Tables</p>
-              </a>
-            </li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="nav-icon bi bi-key-fill"></i><p>Login Attempts</p></a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="nav-icon bi bi-award-fill"></i><p>Licenses</p></a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="nav-icon bi bi-sliders"></i><p>System Settings</p></a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="nav-icon bi bi-person-badge-fill"></i><p>System Roles</p></a></li>
           </ul>
         </li>
+
+        <!-- Management -->
         <li class="nav-item">
-          <a href="./docs/faq.html" class="nav-link">
-            <i class="nav-icon bi bi-question-circle-fill"></i>
-            <p>FAQ</p>
+          <a href="#" class="nav-link">
+            <i class="nav-icon bi bi-gear-wide-connected"></i>
+            <p>Management <i class="nav-arrow bi bi-chevron-right"></i></p>
           </a>
-        </li>
-        <li class="nav-item">
-          <a href="./docs/license.html" class="nav-link">
-            <i class="nav-icon bi bi-patch-check-fill"></i>
-            <p>License</p>
-          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item"><a href="#" class="nav-link"><i class="nav-icon bi bi-tags-fill"></i><p>Categories & Units</p></a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="nav-icon bi bi-cash-coin"></i><p>Currencies</p></a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="nav-icon bi bi-truck-front-fill"></i><p>Suppliers List</p></a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="nav-icon bi bi-person-lines-fill"></i><p>Customers List</p></a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="nav-icon bi bi-arrow-repeat"></i><p>Price Changes</p></a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="nav-icon bi bi-arrow-left-right"></i><p>Stock Changes</p></a></li>
+          </ul>
         </li>
 
       </ul>
-      <!--end::Sidebar Menu-->
     </nav>
   </div>
-  <!--end::Sidebar Wrapper-->
 </aside>

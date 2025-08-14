@@ -26,6 +26,57 @@ $productModel = new Product(
 $product = $productModel->getAllProducts($pdo);
 
 ?>
+
+<?php
+// Fetch orders grouped by status
+$stmt = $pdo->query("
+    SELECT status, COUNT(*) as count
+    FROM orders
+    GROUP BY status
+");
+
+$orderStats = [];
+while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    $orderStats[] = [$row['status'], (int)$row['count']];
+}
+?>
+
+<?php
+$stmt = $pdo->query("
+    SELECT status, COUNT(*) as count
+    FROM orders
+    GROUP BY status
+");
+
+$totallabels = [];
+$totaldata = [];
+
+while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    $totallabels[] = ucfirst($row['status']); // Capitalize first letter
+    $totaldata[] = (int)$row['count'];
+}
+?>
+
+<?php
+// Fetch only current week's orders grouped by status
+$stmt = $pdo->query("
+    SELECT status, COUNT(*) AS count
+    FROM orders
+    WHERE YEARWEEK(created_at, 1) = YEARWEEK(CURDATE(), 1)
+    GROUP BY status
+");
+
+$labels = [];
+$data = [];
+
+while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    $labels[] = ucfirst($row['status']); // Capitalize first letter
+    $data[] = (int)$row['count'];
+}
+?>
+
+
+
 <div class="container mt-2 mb-8">
   <div class="row">
     <div class="col-sm-6">
@@ -131,6 +182,16 @@ $product = $productModel->getAllProducts($pdo);
     <canvas id="myChart2" style="max-width:700px; height:500px" class="mb-4 rounded shadow-lg bg-white"></canvas>
   </div>
 </div>
+<div class="row">
+  <div class="col-md-6">
+    <!-- Google Chart can stay in a div -->
+    <div id="myChart" style="max-width:700px; height:400px" class="mb-4 rounded shadow-lg bg-white"></div>
+  </div>
+  <div class="col-md-6">
+    <!-- Chart.js  -->
+    <canvas id="myChart4" style="max-width:700px; height:500px" class="mb-4 rounded shadow-lg bg-white"></canvas>
+  </div>
+</div>
 
 
 
@@ -203,34 +264,37 @@ $product = $productModel->getAllProducts($pdo);
 
 
 <!--Charts Scripts-->
-<script>
-google.charts.load('current', {'packages':['corechart']});
-google.charts.setOnLoadCallback(drawChart);
+<script type="text/javascript">
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
 
-function drawChart() {
-var data = google.visualization.arrayToDataTable([
-  ['Contry', 'Mhl'],
-  ['Italy',54.8],
-  ['France',48.6],
-  ['Spain',44.4],
-  ['USA',23.9],
-  ['Argentina',14.5]
-]);
+    function drawChart() {
+        // Prepare the data
+        var data = google.visualization.arrayToDataTable([
+            ['Status', 'Orders'],
+            <?php
+            foreach ($orderStats as $stat) {
+                echo "['{$stat[0]}', {$stat[1]}],";
+            }
+            ?>
+        ]);
 
-var options = {
-  title:'World Wide Wine Production',
-  is3D:true
-};
+        // Chart options
+        var options = {
+            title: 'Total Orders',
+            is3D: true
+        };
 
-var chart = new google.visualization.PieChart(document.getElementById('myChart'));
-  chart.draw(data, options);
-}
+        // Draw the chart
+        var chart = new google.visualization.PieChart(document.getElementById('myChart'));
+        chart.draw(data, options);
+    }
 </script>
 
 <script>
-var xValues = ["Italy", "France", "Spain", "USA", "Argentina"];
-var yValues = [55, 49, 44, 24, 45];
-var barColors = ["red", "green","blue","orange","brown"];
+var xValues = <?php echo json_encode($totallabels); ?>;
+var yValues = <?php echo json_encode($totaldata); ?>;
+var barColors = ["green", "blue", "orange", "purple", "red"];
 
 new Chart("myChart2", {
   type: "bar",
@@ -242,11 +306,39 @@ new Chart("myChart2", {
     }]
   },
   options: {
-    legend: {display: false},
+    legend: { display: false },
     title: {
       display: true,
-      text: "World Wine Production 2018"
+      text: "Total Orders"
     }
   }
 });
 </script>
+
+<script>
+var xValues = <?php echo json_encode($labels); ?>;
+var yValues = <?php echo json_encode($data); ?>;
+var barColors = ["red", "green", "orange", "purple", "red"];
+
+new Chart("myChart4", {
+  type: "bar",
+  data: {
+    labels: xValues,
+    datasets: [{
+      backgroundColor: barColors,
+      data: yValues
+    }]
+  },
+  options: {
+    legend: { display: false },
+    title: {
+      display: true,
+      text: "Total Orders (This Week)"
+    },
+    scales: {
+      y: { beginAtZero: true }
+    }
+  }
+});
+</script>
+

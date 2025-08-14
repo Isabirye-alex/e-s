@@ -12,7 +12,7 @@ $subcategories = $subcategoryModel->fetchSubCategories();
 
 
 
-<form action="/x/controllers/add_product_controller.php" method="POST" enctype="multipart/form-data" class="container mt-4 form-group form-control fullscreen">
+<form action="/e-s/controllers/add_product_controller.php" method="POST" enctype="multipart/form-data" class="container mt-4 form-group form-control fullscreen">
 <div row>
 <h3 class="mb-4">Add New Product</h3>
 </div> 

@@ -7,9 +7,8 @@ use Cloudinary\Cloudinary;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
-        // =======================
+      
         // 1. Sanitize form inputs
-        // =======================
         $name = $_POST['name'] ?? '';
         $price = floatval($_POST['price'] ?? 0);
         $category_id = intval($_POST['category_id'] ?? 0);
@@ -94,7 +93,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             echo "Error saving product: " . htmlspecialchars($result['message']);
             exit;
         }
-        header("Location: /x/views/dashboard.php");
+        header("Location: /e-s/views/dashboard.php");
         exit;
 
 

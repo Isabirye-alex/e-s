@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Save category, expecting this method to return inserted category ID
         $categoryId = $category->saveCategory();
 
-        header("Location: /x/views/index.php");
+        header("Location: /e-s/views/index.php");
         exit;
 
     } catch (Exception $e) {
