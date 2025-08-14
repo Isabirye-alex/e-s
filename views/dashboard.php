@@ -198,7 +198,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
   <div class="roundex shadow-lg bg-white py-4 px-4">
   <div class="row align-items-center">
     <div class="col-auto">
-      <button type="button" class="btn btn-primary open-modal-btn" data-page="/x/views/product_view.php"
+      <button type="button" class="btn btn-primary open-modal-btn" data-page="/e-s/views/product_view.php"
         data-size="lg">Add</button>
     </div>
     <div class="col-auto">
@@ -217,7 +217,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
       <button type="submit" class="btn btn-primary">PRINT</button>
     </div>
     <div class="col-auto">
-      <button type="button" class="btn btn-primary open-modal-btn" data-page="/x/views/category_view.php"
+      <button type="button" class="btn btn-primary open-modal-btn" data-page="/e-s/views/category_view.php"
         data-size="lg">Add New Category</button>
     </div>
   </div>

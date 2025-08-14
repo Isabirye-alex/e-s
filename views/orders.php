@@ -11,7 +11,7 @@ $order = Orders::getAllOrders($pdo);
         </div>
         <div class="row mb-3 align-items-center" style="width:100%">
             <div class="col-md-6 d-flex">
-                <button type="button" class="btn btn-primary me-2 open-modal-btn">
+                <button type="button" class="btn btn-primary me-2 open-modal-btn" data-requires-selection="true">
                     Update Order
                 </button>
                 <a href="#" class="btn btn-success me-2">View Order</a>
