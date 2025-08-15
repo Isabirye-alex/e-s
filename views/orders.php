@@ -16,10 +16,8 @@ $order = Orders::getAllOrders($pdo);
             </button>
             <button type="button" class="btn btn-primary open-modal-btn" data-page="/e-s/views/order_detail.php"
                 data-requires-selection="true" data-size="lg">View Order</button>
-            <a href="#" class="btn py-2 btn-dark">Print Receipt</a>
+          <button onclick="printSelectedOrder()" class="btn btn-success me-2">PRINT RECEIPT</button>
         </div>
-
-
         <div class="col-md-6 d-flex justify-content-end">
             <button onclick="copyTable()" class="btn btn-secondary me-2">Copy</button>
             <a href="/e-s/controllers/export_csv.php" class="btn btn-success me-2">CSV</a>
@@ -31,6 +29,7 @@ $order = Orders::getAllOrders($pdo);
         </div>
     </div>
 </div>
+
 <!-- </div> -->
 <table id="orderTable" class="table table-striped rounded shadow-lg table-bordered mt-4">
     <thead>
@@ -133,4 +132,134 @@ $order = Orders::getAllOrders($pdo);
         printWindow.print();
     }
 
+</script>
+<script>
+function printSelectedOrder() {
+    if (!selectedRow) {
+        alert('Please select an order first!');
+        return;
+    }
+
+    const orderId = $(selectedRow).data('order-id');
+
+    // Fetch order items from your backend via AJAX
+    $.getJSON(`/e-s/controllers/get_order_items.php?orderId=${orderId}`, function(data) {
+        if (!data.order || !data.items) {
+            alert('Failed to fetch order details.');
+            return;
+        }
+
+        const order = data.order;
+        const items = data.items;
+
+        // Build HTML for receipt
+        let html = `
+        <div style="font-family: Arial, Helvetica, sans-serif; width: 100%; max-width: 600px; margin: 0 auto; padding: 20px;">
+            <div style="text-align: center; margin-bottom: 20px;">
+                <h1 style="margin: 0; font-size: 24px;">E-Shop UG</h1>
+                <p style="margin: 2px 0; font-size: 12px;">123 Banda Wakiso, Kampala , Uganda</p>
+                <p style="margin: 2px 0; font-size: 12px;">Email: lex.isabirye@pearl-host.com.com | Phone: +256 752 687 851</p>
+                <h2 style="margin-top: 10px;">Order Receipt</h2>
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <p><strong>Order ID:</strong> ${order.id}</p>
+                <p><strong>Date:</strong> ${order.is_paid_at || 'Not paid yet'}</p>
+                <p><strong>Customer:</strong> ${order.customer_first_name} ${order.customer_last_name}</p>
+                <p><strong>Payment Method:</strong> ${order.payment_method}</p>
+                <p><strong>Status:</strong> ${order.status}</p>
+                <p><strong>Delivery Date:</strong> ${order.is_delivered_at || 'Pending'}</p>
+            </div>
+
+            <table style="width:70%; border-collapse: collapse; font-size: 14px;">
+                <thead>
+                    <tr>
+                        <th style="border:1px solid #333; padding:5px;">Item</th>
+                        <th style="border:1px solid #333; padding:5px;">Qty</th>
+                        <th style="border:1px solid #333; padding:5px;">Unit Price (UGX)</th>
+                        <th style="border:1px solid #333; padding:5px;">Subtotal (UGX)</th>
+                    </tr>
+                </thead>
+                <tbody>
+        `;
+
+        let grandTotal = 0;
+        items.forEach(item => {
+            const subtotal = item.quantity * item.product_price;
+            grandTotal += subtotal;
+
+            html += `
+                <tr>
+                    <td style="border:1px solid #333; padding:5px;">${item.product_name}</td>
+                    <td style="border:1px solid #333; padding:5px; text-align:center;">${item.quantity}</td>
+                    <td style="border:1px solid #333; padding:5px; text-align:right;">${Number(item.product_price).toLocaleString()}</td>
+                    <td style="border:1px solid #333; padding:5px; text-align:right;">${subtotal.toLocaleString()}</td>
+                </tr>
+            `;
+        });
+
+        html += `
+                    <tr>
+                        <td colspan="3" style="border:1px solid #333; padding:5px; text-align:right; font-weight:bold;">Grand Total</td>
+                        <td style="border:1px solid #333; padding:5px; text-align:right; font-weight:bold;">${grandTotal.toLocaleString()}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div style="text-align:center; margin-top:20px; font-size: 14px;">
+                Thank you for your purchase!
+            </div>
+        </div>
+        `;
+
+        // Open print window
+        let printWindow = window.open('Lexus', 'L', 'width=800,height=800');
+        printWindow.document.write(html);
+        printWindow.document.write('</body></html>');
+        printWindow.document.close();
+        printWindow.focus();
+        printWindow.print();
+    });
+}
+</script>
+
+
+<script>
+let selectedRow = null; // global
+
+$(document).ready(function() {
+    // Row selection
+    $('#orderTable tbody').on('click', 'tr', function () {
+        if (selectedRow) $(selectedRow).removeClass('selected-row');
+        if (selectedRow === this) {
+            selectedRow = null;
+        } else {
+            selectedRow = this;
+            $(this).addClass('selected-row');
+        }
+    });
+
+    // Print receipt for selected order
+    $('#printReceiptBtn').on('click', function() {
+    if (!selectedRow) {
+        alert('Please select an order first!');
+        return;
+    }
+
+    const orderId = $(selectedRow).data('order-id');
+
+    // Load receipt HTML dynamically
+    $.get(`/e-s/controllers/print_receipt.php?orderId=${orderId}`, function(html) {
+        // Open print window
+        let printWindow = window.open('', '', 'width=600,height=800');
+        printWindow.document.write('<html><head><title>Order Receipt</title></head><body>');
+        printWindow.document.write(html);
+        printWindow.document.write('</body></html>');
+        printWindow.document.close();
+        printWindow.focus();
+        printWindow.print();
+    });
+});
+
+});
 </script>
