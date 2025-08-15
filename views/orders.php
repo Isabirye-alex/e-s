@@ -18,11 +18,12 @@ $order = Orders::getAllOrders($pdo);
                 <a href="#" class="btn btn-dark">Print Receipt</a>
             </div>
             <div class="col-md-6 d-flex justify-content-end">
-                <button class="btn btn-secondary me-2">Copy</button>
-                <button class="btn btn-success me-2">CSV</button>
-                <button class="btn btn-warning me-2">Excel</button>
-                <button class="btn btn-danger me-2">PDF</button>
-                <button class="btn btn-info">Print</button>
+                <button onclick="copyTable()" class="btn btn-secondary me-2">Copy</button>
+                <a href="/e-s/controllers/export_csv.php" class="btn btn-success me-2">CSV</a>
+
+                <button onclick="/e-s/controllers/export_excel.php" class="btn btn-warning me-2">Excel</button>
+                <button onclick="/e-s/controllers/export_pdf.php" class="btn btn-danger me-2">PDF</button>
+                <button onclick="printTable()" class="btn btn-info">Print</button>
             </div>
         </div>
         <!-- </div> -->
@@ -64,6 +65,29 @@ $order = Orders::getAllOrders($pdo);
     </tbody>
 </table>   
  </div>
+
+ <!--Javascript functions for the right buttons-->
+ <script>
+     function copyTable() {
+    let table = document.getElementById("orderTable").outerHTML;
+    navigator.clipboard.writeText(table);
+    alert("Table copied to clipboard!");
+}
+ </script>
+
+ <script>
+    function printTable() {
+    let content = document.getElementById("orderTable").outerHTML;
+    let newWin = window.open("");
+    newWin.document.write("<html><body>" + content + "</body></html>");
+    newWin.print();
+    newWin.close();
+}
+
+ </script>
+
+
+
     
 
 
