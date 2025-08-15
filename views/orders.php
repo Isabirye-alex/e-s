@@ -14,9 +14,9 @@ $order = Orders::getAllOrders($pdo);
             <button type="button" class="btn btn-primary me-2 open-modal-btn" data-requires-selection="true" data-page="/e-s/views/mini_pages/order_details.php">
                 Update Order
             </button>
-            <button type="button" class="btn btn-primary open-modal-btn" data-page="/e-s/views/order_detail.php"
+            <button type="button" class="btn btn-primary open-modal-btn me-2" data-page="/e-s/views/order_detail.php"
                 data-requires-selection="true" data-size="lg">View Order</button>
-          <button onclick="printSelectedOrder()" class="btn btn-success me-2">PRINT RECEIPT</button>
+          <button onclick="printSelectedOrder()" class="btn btn-success me-2 ">PRINT RECEIPT</button>
         </div>
         <div class="col-md-6 d-flex justify-content-end">
             <button onclick="copyTable()" class="btn btn-secondary me-2">Copy</button>

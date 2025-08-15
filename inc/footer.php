@@ -15,10 +15,14 @@
     $(document).ready(function () {
         if ($('#orderTable').length) {
             const table = $('#orderTable').DataTable({
-                ordering: true,
+                ordering: true,         // Enables column sorting
                 pageLength: 10,
                 lengthChange: true,
-                language: { search: "Search:", paginate: { previous: "&laquo;", next: "&raquo;" } }
+                responsive: true,
+                language: {
+                    search: "Search:",
+                    paginate: { previous: "&laquo;", next: "&raquo;" }
+                }
             });
 
             let selectedRow = null;
