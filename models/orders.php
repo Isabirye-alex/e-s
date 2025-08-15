@@ -65,6 +65,36 @@ class Orders
         }
     }
 
+    //Get Order items
+    public static function getOrderItems($pdo, $orderId){
+        $sql = "
+            SELECT oi.*, p.name AS product_name, p.imageUrl AS product_image, p.price AS product_price
+            FROM order_items oi
+            JOIN products p ON oi.product_id = p.id
+            WHERE oi.order_id = :id
+        ";
+    
+        try {
+            $stmt = $pdo->prepare($sql);
+            $stmt->bindValue(':id', $orderId, PDO::PARAM_INT);
+            $stmt->execute();
+    
+            $data = $stmt->fetchAll(PDO::FETCH_ASSOC); // fetch all items
+    
+            if (!$data) {
+                return [];
+            } else {
+                return $data; // return array of items
+            }
+    
+        } catch (PDOException $e) {
+            // Log or display error
+            error_log("getOrderItems error: " . $e->getMessage());
+            return [];
+        }
+    }
+    
+
     public static function getOrderById($pdo, $id, )
     {
         $sql = "SELECT o.*, 

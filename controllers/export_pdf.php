@@ -1,6 +1,6 @@
 <?php
 // export_pdf.php
-require 'vendor/autoload.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 use Dompdf\Dompdf;
 
 require_once __DIR__ . '/../config/db.php';

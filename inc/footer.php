@@ -102,7 +102,7 @@
                 if ($(this).data('requires-selection')) {
                     if (!selectedRow) { alert('Select a row first!'); return; }
                     const orderId = $(selectedRow).data('order-id');
-                    $('#dynamicModalLabel').text('Update Order ' + orderId);
+                    $('#dynamicModalLabel').text('Update Product ' + orderId);
                     loadModalContent(`${pageUrl}?orderId=${orderId}`);
                 } else {
                     $('#dynamicModalLabel').text($(this).text());
