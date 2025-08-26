@@ -29,12 +29,14 @@ class Orders
         $this->status = $status;
     }
 
-    public static function getAllOrders($pdo)
+    public static function getAllOrders($pdo): array
     {
-        $sql = "SELECT o.*, u.firstName AS customer_first_name, u.lastName as customer_last_name 
+        $sql = <<<'EOF'
+SELECT o.*, u.firstName AS customer_first_name, u.lastName as customer_last_name 
                 FROM orders o
                 LEFT JOIN users u ON o.user_id = u.id
-                ORDER BY o.id DESC";
+                ORDER BY o.id DESC
+EOF;
 
         try {
             $stmt = $pdo->query($sql);
