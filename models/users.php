@@ -6,29 +6,30 @@ class User {
     public string $email;
     public string $password;
     public string $user_type;
-
     public string $status;
 
-    private $pdo;
+    private PDO $pdo;
 
-    public function __construct($id, $firstname, $lastname, $email, $password, $user_type, $pdo, $status)
+    // Constructor accepts PDO and all user fields
+    public function __construct($pdo, int $id = 0, string $firstname = '', string $lastname = '', string $email = '', string $password = '', string $user_type = '', string $status = '')
     {
         $this->pdo = $pdo;
         $this->id = $id;
         $this->firstname = $firstname;
         $this->lastname = $lastname;
         $this->email = $email;
-        $this->status = $status;
         $this->password = $password;
         $this->user_type = $user_type;
+        $this->status = $status;
     }
 
-    public function registerUser($pdo): array
+    // ---------------- Registration ----------------
+    public function registerUser(): array
     {
         // Validation
         $required_fields = ['firstname', 'lastname', 'email', 'password', 'user_type', 'status'];
         foreach ($required_fields as $field) {
-            if (!isset($_POST[$field]) || trim($_POST[$field]) === '') {
+            if (empty(trim($this->{$field}))) {
                 return [
                     'status' => 'error',
                     'message' => ucfirst($field) . ' is required',
@@ -37,8 +38,8 @@ class User {
             }
         }
 
-        // Email validation
-        if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+        // Email format validation
+        if (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
             return [
                 'status' => 'error',
                 'message' => 'Invalid email format',
@@ -46,8 +47,8 @@ class User {
             ];
         }
 
-        // Password validation
-        if (strlen($_POST['password']) < 6) {
+        // Password length check
+        if (strlen($this->password) < 6) {
             return [
                 'status' => 'error',
                 'message' => 'Password must be at least 6 characters',
@@ -56,9 +57,9 @@ class User {
         }
 
         try {
-            // Check for duplicate email
-            $checkStmt = $pdo->prepare("SELECT id FROM users WHERE email = :email LIMIT 1");
-            $checkStmt->execute(['email' => $_POST['email']]);
+            // Check duplicate email
+            $checkStmt = $this->pdo->prepare("SELECT id FROM users WHERE email = :email LIMIT 1");
+            $checkStmt->execute(['email' => $this->email]);
             if ($checkStmt->fetch()) {
                 return [
                     'status' => 'error',
@@ -67,27 +68,29 @@ class User {
                 ];
             }
 
-            // Prepare fields
+            // Hash password
+            $hashedPassword = password_hash($this->password, PASSWORD_BCRYPT, ['cost' => 12]);
+
+            // Insert user
             $fields = [
                 'firstname' => $this->firstname,
                 'lastname'  => $this->lastname,
                 'email'     => $this->email,
-                'password'  => password_hash($this->password, PASSWORD_BCRYPT, ['cost'=>20]), // hash password
+                'password'  => $hashedPassword,
                 'user_type' => $this->user_type,
                 'status'    => $this->status
             ];
 
             $columns = implode(', ', array_keys($fields));
             $placeholders = ':' . implode(', :', array_keys($fields));
-
             $sql = "INSERT INTO users ($columns) VALUES ($placeholders)";
-            $stmt = $pdo->prepare($sql);
+            $stmt = $this->pdo->prepare($sql);
             $stmt->execute($fields);
 
             return [
                 'status'  => 'success',
                 'message' => 'User registered successfully',
-                'id'      => $pdo->lastInsertId()
+                'id'      => $this->pdo->lastInsertId()
             ];
         } catch (PDOException $e) {
             return [
@@ -98,48 +101,36 @@ class User {
         }
     }
 
-    public function loginUser($pdo): array
+    // ---------------- Login ----------------
+    public function loginUser(): array
     {
         // Validation
-        $required_fields = ['email', 'password'];
-        foreach ($required_fields as $field) {
-            if (!isset($_POST[$field]) || trim($_POST[$field]) === '') {
-                return [
-                    'status' => 'error',
-                    'message' => ucfirst($field) . ' is required',
-                    'id' => null
-                ];
-            }
+        if (empty(trim($this->email)) || empty(trim($this->password))) {
+            return [
+                'status'  => 'error',
+                'message' => 'Email and password are required',
+                'id'      => null
+            ];
         }
 
         try {
-            // Fetch user by email
-            $sql = "SELECT * FROM users WHERE email = :email LIMIT 1";
-            $stmt = $pdo->prepare($sql);
+            $stmt = $this->pdo->prepare("SELECT * FROM users WHERE email = :email LIMIT 1");
             $stmt->execute(['email' => $this->email]);
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
-            if (!$user) {
+
+            if (!$user || !password_verify($this->password, $user['password'])) {
                 return [
-                    'status' => 'error',
+                    'status'  => 'error',
                     'message' => 'Invalid email or password',
-                    'id' => null
+                    'id'      => null
                 ];
             }
 
-            // Verify password
-            if (!password_verify($this->password, $user['password'])) {
-                return [
-                    'status' => 'error',
-                    'message' => 'Invalid email or password',
-                    'id' => null
-                ];
-            }
-
-            //Login success
+            // Successful login
             return [
                 'status'  => 'success',
                 'message' => 'User logged in successfully',
-                'id'      => $user['id'],    // return the actual user ID
+                'id'      => $user['id'],
                 'user'    => [
                     'firstname' => $user['firstname'],
                     'lastname'  => $user['lastname'],
@@ -148,14 +139,12 @@ class User {
                     'status'    => $user['status']
                 ]
             ];
-
         } catch (PDOException $e) {
             return [
-                'status' => 'error',
+                'status'  => 'error',
                 'message' => 'Database error: ' . $e->getMessage(),
-                'id' => null
+                'id'      => null
             ];
         }
     }
-
 }
